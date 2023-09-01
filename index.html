@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carrusel de imágenes</title>
+    <style>
+        /* Estilos específicos para tu carrusel de imágenes */
+        .slider-container {
+            position: relative;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .slider {
+            width: 100%;
+            height: auto;
+        }
+
+        #slider-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            transition: opacity 1s ease-in-out;
+            opacity: 0;
+        }
+
+        .slider-navigation {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+
+        /* Estilos adicionales para pantallas pequeñas */
+        @media (max-width: 768px) {
+            .slider-navigation {
+                margin-top: 5px;
+            }
+
+            button {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <div class="slider">
+            <img id="slider-image" src="" alt="Slider Image" />
+        </div>
+        <div class="slider-navigation">
+            <button id="prev-btn">&#8249;</button>
+            <button id="next-btn">&#8250;</button>
+        </div>
+    </div>
+    <script>
+      const cloudName = "dpofvpe7b";
+      const publicIDs = [
+        "distribuidor-master-equipos-mikrotik-telecomunicaciones-ecuador-1_lxhwm3",
+        "portafolio/ecgmpb9czjnavh7ib4to",
+        "portafolio/jrgbitrswuztljkq030l",
+        "portafolio/rs2t2grvmlxqccfdk3zs",
+        "portafolio/cuwkxf5cjjqcwdbl49uj",
+        "portafolio/cw7tn73brtpcqllvb5mt",
+      ];
+      const apiKey = "236239313584192";
+
+      const sliderImage = document.getElementById("slider-image");
+      const prevBtn = document.getElementById("prev-btn");
+      const nextBtn = document.getElementById("next-btn");
+
+      let currentImageIndex = 0;
+
+      function cargarImagen(index) {
+        const imageUrl = `https://res.cloudinary.com/${cloudName}/image/upload/${publicIDs[index]}.jpg`;
+
+        sliderImage.style.opacity = 0; // Establecer la opacidad en 0 para desvanecer
+        setTimeout(() => {
+          sliderImage.src = imageUrl;
+          sliderImage.style.opacity = 1; // Aumentar la opacidad después de cambiar la imagen
+        }, 1000);
+      }
+
+      function showNextImage() {
+        currentImageIndex = (currentImageIndex + 1) % publicIDs.length;
+        cargarImagen(currentImageIndex);
+      }
+
+      function showPrevImage() {
+        currentImageIndex =
+          (currentImageIndex - 1 + publicIDs.length) % publicIDs.length;
+          cargarImagen(currentImageIndex);
+      }
+
+      prevBtn.addEventListener("click", showPrevImage);
+      nextBtn.addEventListener("click", showNextImage);
+
+      cargarImagen(currentImageIndex);
+      setInterval(showNextImage, 5000);
+    </script>
+</body>
+</html>
